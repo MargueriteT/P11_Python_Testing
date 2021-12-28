@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Points board | GUDLFT Registration</title>
+</head>
+<body>
+    <h2>Welcome, {{connected_club['email']}} </h2><a href="{{url_for('logout')}}">Logout</a>
+
+
+    <form action="/showSummary" method="post">
+
+        <input type="hidden" name="email" id=""
+               value="{{connected_club['email']}}"/>
+        <button type="submit">Go back to home page</button>
+    </form>
+
+    </br>
+    </br>
+    </br>
+    {% for club in clubs %}
+        {{ club['name'] }} : {{ club['points'] }} </br>
+    {% endfor %}
+
+
+</body>
+</html>
