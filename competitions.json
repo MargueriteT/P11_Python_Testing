@@ -14,6 +14,11 @@
             "name": "Full Classic",
             "date": "2024-10-22 13:30:00",
             "numberOfPlaces": "10"
+        },
+        {
+            "name": "Fully Classic",
+            "date": "2024-10-22 13:30:00",
+            "numberOfPlaces": "14"
         }
     ]
 }

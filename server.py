@@ -1,7 +1,5 @@
 import json
-from urllib.error import HTTPError
 
-import urllib3
 from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, flash, url_for
@@ -83,7 +81,7 @@ def purchasePlaces():
         return render_template('booking.html', club=club,
                                competition=competition)
     elif placesRequired > 12:
-        flash("It's not possible to book more than twelve places.")
+        flash("Not possible to book more than twelve places.")
         return render_template('booking.html', club=club,
                                competition=competition)
     elif placesRequired <= int(club["points"]):
