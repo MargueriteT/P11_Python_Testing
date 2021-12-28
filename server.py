@@ -1,4 +1,9 @@
 import json
+from urllib.error import HTTPError
+
+import urllib3
+from datetime import datetime
+
 from flask import Flask, render_template, request, redirect, flash, url_for
 
 
@@ -42,15 +47,26 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in clubs if c['name'] == club][0]
-    foundCompetition = [c for c in competitions if c['name'] == competition][0]
-    if foundClub and foundCompetition:
-        return render_template('booking.html', club=foundClub,
-                               competition=foundCompetition)
-    else:
+    try:
+        foundClub = [c for c in clubs if c['name'] == club][0]
+        foundCompetition = [c for c in competitions if c['name'] == competition][0]
+        competitionDate = datetime.strptime(foundCompetition['date'][0:10],
+                                            "%Y-%m-%d").date()
+        date = datetime.now().date()
+        result = competitionDate > date
+        if foundClub and foundCompetition:
+            if result:
+                return render_template('booking.html', club=foundClub,
+                                       competition=foundCompetition)
+            else:
+                flash("This is a past competition, reservation is not "
+                      "available")
+                club = foundClub
+                return render_template('welcome.html', club=club,
+                                       competitions=competitions)
+    except IndexError:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club,
-                               competitions=competitions)
+        return render_template('index.html')
 
 
 @app.route('/purchasePlaces', methods=['POST'])
