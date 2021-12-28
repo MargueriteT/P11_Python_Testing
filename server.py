@@ -100,7 +100,11 @@ def purchasePlaces():
                                competitions=competitions)
 
 
-# TODO: Add route for points display
+@app.route('/board/<club>')
+def board(club):
+    connected_club = [c for c in clubs if c['name'] == club][0]
+    return render_template('board.html', connected_club=connected_club,
+                           clubs=clubs)
 
 
 @app.route('/logout')
